@@ -13,11 +13,16 @@ OSD 效果模拟渲染器（参考模型）
   python render_osd.py current      # 渲染当前实现（含已知重叠缺陷）
   python render_osd.py proposed     # 渲染美化方案（c34 目标）
 """
-import io, re, struct, sys
+import io, os, re, struct, sys
 
 W, H = 640, 480
-FONT_V = r"D:/FPGA/VedioCardV2/AudioVisual/lab_ex4_tf/src/user_source/hdl_source/osd_font_rom.v"
-OUT_DIR = r"D:/FPGA/VedioCardV2/docs"
+
+# 全部按仓库相对布局解析，克隆到任意路径都能跑
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_REPO = os.path.dirname(os.path.dirname(_HERE))
+FONT_V = os.path.join(_REPO, "hardware", "hdmi_media_player", "src",
+                      "user_source", "hdl_source", "osd_font_rom.v")
+OUT_DIR = os.path.join(_REPO, "docs", "images")
 
 # ---------------- 字库 ----------------
 def load_font():

@@ -1,9 +1,12 @@
 # ---- TD 构建产物（可由源码重建，不入库） ----
 hardware/**/*.db
+hardware/**/*.rpt
+hardware/**/*.timing
+hardware/**/*.area
+hardware/**/*.qor
 hardware/**/*.log
 hardware/**/*.logw
 hardware/**/*.status
-hardware/**/*.timing
 hardware/**/*.bid
 hardware/**/.*.f
 hardware/**/best_result/

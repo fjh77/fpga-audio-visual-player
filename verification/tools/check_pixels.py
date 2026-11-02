@@ -7,8 +7,14 @@
 """
 import sys, io, os
 
-sys.path.insert(0, r"D:/FPGA/VedioCardV2/tools")
+# 参考模型与本脚本同目录，直接从这里导入，不依赖任何绝对路径
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import render_osd as R
+
+if "--help" in sys.argv or "-h" in sys.argv or len(sys.argv) < 6:
+    print(__doc__.strip())
+    print("  sel / cfg / setup / banner / hide 均为整数；先跑 vvp 生成 osd_pixels.txt")
+    raise SystemExit(0)
 
 sel, cfg, setup, banner, hide = (int(a) for a in sys.argv[1:6])
 

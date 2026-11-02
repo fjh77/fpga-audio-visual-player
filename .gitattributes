@@ -13,6 +13,12 @@
 *.md      text
 *.py      text
 
+# TD 生成的报告：不做行尾规范化，保证与工具原始输出逐字节一致
+*.rpt     -text -diff
+*.log     -text -diff
+*.qor     -text -diff
+*.area    -text -diff
+
 # 二进制资产（禁止行尾转换与 diff）
 *.bit     binary
 *.BMP     binary

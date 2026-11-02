@@ -5,10 +5,14 @@ osd_overlay.v 的参考模型（亮度/音量调节面板）。
 与 render_osd.py 同一套路：compose_panel() 严格对应 RTL 的 mix always 块，
 用来和 iverilog 的整帧 dump 做逐像素比对。
 """
-import io, re
+import io, os, re
 
 W, H = 640, 480
-FONT_V = r"D:/FPGA/VedioCardV2/AudioVisual/lab_ex4_tf/src/user_source/hdl_source/osd_font_rom.v"
+
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_REPO = os.path.dirname(os.path.dirname(_HERE))
+FONT_V = os.path.join(_REPO, "hardware", "hdmi_media_player", "src",
+                      "user_source", "hdl_source", "osd_font_rom.v")
 
 
 def load_font():

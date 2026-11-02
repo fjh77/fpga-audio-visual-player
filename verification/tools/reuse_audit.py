@@ -24,13 +24,12 @@ import sys
 
 # ---------------------------------------------------------------- 路径配置
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(HERE)
+ROOT = os.path.dirname(os.path.dirname(HERE))  # 仓库根目录
 
 REF_SUBPROJECTS = ("lab_ex4_tf", "lab_ex5_i2s")
-REF_ROOT = os.path.join(
-    ROOT, "HX4S20", "HX4S20_Contest_202606", "7_lab_ex_2026_nosoft",
-    "全国大学生嵌入式芯片与系统设计竞赛'2026选题指南_康芯")
-OUR_ROOT = os.path.join(ROOT, "AudioVisual", "hdmi_media_player",
+# 参考实例不随本仓库分发；默认位置只是占位，实际请用 --ref-root 指定
+DEFAULT_REF_ROOT = os.path.join(ROOT, "third_party", "reference")
+OUR_ROOT = os.path.join(ROOT, "hardware", "hdmi_media_player",
                         "src", "user_source", "hdl_source")
 
 SKIP_DIR_PARTS = (".backup", "_archive", ".backup_")
@@ -86,8 +85,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--detail", action="store_true", help="输出改动行数明细")
     ap.add_argument("--file", default=None, help="只审计指定文件（相对 hdl_source）")
+    ap.add_argument("--ref-root", default=DEFAULT_REF_ROOT,
+                    help="参考实例根目录（含 lab_ex4_tf / lab_ex5_i2s），不随本仓库分发")
     args = ap.parse_args()
 
+    REF_ROOT = args.ref_root
     refs = {}
     for sub in REF_SUBPROJECTS:
         base = os.path.join(REF_ROOT, sub, "src", "user_source", "hdl_source")
@@ -98,6 +100,8 @@ def main():
 
     if not refs:
         print("[ERROR] 找不到参考实例目录：%s" % REF_ROOT)
+        print("        参考实例（lab_ex4_tf / lab_ex5_i2s）不随本仓库分发，")
+        print("        请自备后用 --ref-root 指定其根目录。")
         return 2
     if not ours:
         print("[ERROR] 找不到工程源码目录：%s" % OUR_ROOT)

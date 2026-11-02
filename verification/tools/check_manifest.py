@@ -1,8 +1,12 @@
 """按《交付清单_MD5.txt》校验交付包完整性。
 
-用法（在包根目录执行）：
-    python 03_verify/tools/check_manifest.py
-    python 03_verify/tools/check_manifest.py --root <包根目录>
+注意：该清单由竞赛交付包生成，**不随本仓库分发**。要校验仓库自身，
+请先按清单格式自建，或用 --manifest 指向已有的清单文件。
+
+用法：
+    python verification/tools/check_manifest.py
+    python verification/tools/check_manifest.py --root <包根目录>
+    python verification/tools/check_manifest.py --manifest <清单路径>
 
 退出码：0 = 全部一致；1 = 有缺失 / 不一致。
 """
@@ -11,6 +15,8 @@ import os
 import sys
 
 MANIFEST = "交付清单_MD5.txt"
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_REPO = os.path.dirname(os.path.dirname(_HERE))
 COLS = 84  # 清单里路径列的宽度
 
 
@@ -48,12 +54,16 @@ def parse(path):
 
 
 def main():
-    root = "."
+    root = _REPO
     if "--root" in sys.argv:
         root = sys.argv[sys.argv.index("--root") + 1]
     mf = os.path.join(root, MANIFEST)
+    if "--manifest" in sys.argv:
+        mf = sys.argv[sys.argv.index("--manifest") + 1]
     if not os.path.isfile(mf):
-        print("找不到清单：%s（请在包根目录执行，或用 --root 指定）" % mf)
+        print("找不到清单：%s" % mf)
+        print("  该清单由交付包生成，本仓库不含；请用 --manifest 指定清单路径，")
+        print("  或 --root 指向包含清单的包根目录。")
         return 1
 
     rows = parse(mf)
