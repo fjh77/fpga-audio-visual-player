@@ -83,7 +83,7 @@
 |---|---|
 | ![按键与拨码](docs/images/keys-and-switches.png) | ![数码管](docs/images/seven-segment.png) |
 
-更完整的操作手册见 [`docs/manual-zh.pdf`](docs/manual-zh.pdf)（13 章 + 2 附录，28 页），
+更完整的操作手册见 [`docs/manual-zh.pdf`](docs/manual-zh.pdf)（13 章 + 2 附录，含封面共 29 页），
 技术选型分层见 [`docs/images/tech-stack.png`](docs/images/tech-stack.png)。
 
 ---
