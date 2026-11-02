@@ -1,13 +1,14 @@
 # bmp_read 改写验证环境
 
-本目录用于复核 `SD/bmp_read.v` 骨架改写的正确性，配套文档为 `../../README/复用与自研边界声明.md`。
+本目录用于复核 `hardware/hdmi_media_player/src/user_source/hdl_source/SD/bmp_read.v`
+骨架改写的正确性，派生关系与相似度数据见 `../../THIRD-PARTY-NOTICES.md`。
 
 ## 文件
 
 | 文件 | 说明 |
 |---|---|
-| `bmp_read_new.v` | 改写后的版本（与 `02_project/.../hdl_source/SD/bmp_read.v` 内容一致） |
-| `bmp_read_ref.v` | 改写前的版本，仅把模块名改成 `bmp_read_ref`，逻辑一字未动 |
+| `bmp_read_new.v` | 改写后的版本，与工程内 `SD/bmp_read.v` 的改动同步 |
+| `bmp_read_ref.v` | 改写前的基线版本，仅把模块名改成 `bmp_read_ref`，逻辑一字未动 |
 | `tb_bmp_equiv.v` | 差分 testbench：两个版本接同一套激励，逐拍比对全部输出 |
 | `mutation_test.py` | 变异测试：向正确版本注入已知缺陷，验证 testbench 有检测能力 |
 

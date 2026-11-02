@@ -8,9 +8,9 @@
 
 | 脚本 | 用途 | 引用出处 |
 |---|---|---|
-| `check_manifest.py` | 按《交付清单_MD5.txt》逐条核对包内文件的大小与 MD5，输出「一致 / 缺失 / 异常」计数 | `交付清单_MD5.txt` 末尾「核对方法」 |
-| `reuse_audit.py` | 去注释、去空白后按行做 `difflib` 比对，统计复用代码与自研代码的相似度 | `README/复用与自研边界声明.md` / `.docx` |
-| `render_osd.py` | OSD 参考模型：按 RTL 的优先级链渲染整帧，生成黄金参考图 | `README/技术栈说明书.docx` §验证 |
+| `check_manifest.py` | 按清单文件逐条核对文件大小与 MD5，输出「一致 / 缺失 / 异常」计数 | 清单用 `--manifest` 指定，仓库不附带 |
+| `reuse_audit.py` | 去注释、去空白后按行做 `difflib` 比对，统计复用代码与自研代码的相似度 | `THIRD-PARTY-NOTICES.md` §2 |
+| `render_osd.py` | OSD 参考模型：按 RTL 的优先级链渲染整帧，生成黄金参考图 | `docs/manual-zh.pdf` §验证 |
 | `render_overlay.py` | 叠加层（亮度 / 对比度面板）参考模型 | 同上 |
 | `check_pixels.py` | 把 RTL 仿真 dump 的逐像素结果与参考模型比对，输出失配数与坐标 | 同上 |
 | `contrast_audit.py` | OSD 文字配色的 WCAG 对比度静态审计 | 同上 |

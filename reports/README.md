@@ -1,20 +1,24 @@
 # 构建报告（C77 实测）
 
-本目录是交付比特流 `01_bit/hdmi_media_player_C77.bit` 的**全部原始报告**，
-用于在包内直接复核文档中引用的每一个数字。**无需运行工具链即可复算。**
+本目录是比特流 `bitstream/hdmi_media_player_C77.bit` 的**全部原始报告**，
+用于在仓库内直接复核文档中引用的每一个数字。**无需运行工具链即可复算。**
 
 构建时间 2026-10-30 23:18–23:24　工具链 Anlogic TD 6.2.1（Engineer 6.2.168.116）
 器件 EG4S20BG256　流程 `syn_1`（综合）→ `phy_1`（实现 + bitgen）
 
-| 文件 | 内容 | 来源 |
+下表「构建时位置」指 TD 在 `hardware/hdmi_media_player/src/td_project/hdmi_media_player_Runs/` 下生成的原始文件。
+这些文件属于**构建产物**（`*.log` / `*.qor` / `*.area` / `*.timing`）不入库，
+仓库只保留本目录这一份归档副本；重新构建后会再次生成。
+
+| 文件 | 内容 | 构建时位置 |
 | --- | --- | --- |
-| `C77_00_synth.log` | 综合阶段完整日志 | `Runs/syn_1/run.log` |
-| `C77_01_synth_gate.qor` | 综合 QoR（资源 / gate 级时序） | `Runs/syn_1/gate.qor` |
-| `C77_02_place.qor` | 布局 QoR（含拥塞与 place 级 hold） | `Runs/phy_1/place.qor` |
-| `C77_03_route.qor` | **布线 QoR —— 签核指标都在这里** | `Runs/phy_1/route.qor` |
-| `C77_04_area.rpt` | 实现后面积利用率（LUT / REG / 分模块） | `Runs/phy_1/hdmi_media_player_phy.area` |
-| `C77_05_timing.rpt` | 逐路径时序报告（含各时钟域汇总） | `Runs/phy_1/hdmi_media_player_pr.timing` |
-| `C77_06_build.log` | 实现阶段完整日志 | `Runs/phy_1/run.log` |
+| `C77_00_synth.log` | 综合阶段完整日志 | `syn_1/run.log` |
+| `C77_01_synth_gate.qor` | 综合 QoR（资源 / gate 级时序） | `syn_1/gate.qor` |
+| `C77_02_place.qor` | 布局 QoR（含拥塞与 place 级 hold） | `phy_1/place.qor` |
+| `C77_03_route.qor` | **布线 QoR —— 签核指标都在这里** | `phy_1/route.qor` |
+| `C77_04_area.rpt` | 实现后面积利用率（LUT / REG / 分模块） | `phy_1/hdmi_media_player_phy.area` |
+| `C77_05_timing.rpt` | 逐路径时序报告（含各时钟域汇总） | `phy_1/hdmi_media_player_pr.timing` |
+| `C77_06_build.log` | 实现阶段完整日志 | `phy_1/run.log` |
 
 ---
 
@@ -100,8 +104,8 @@
 
 ## 7. 复现方法
 
-本包的 `phy_1/settings.cfg` 已配好为"可复现 C77"：`parent = ../syn_1`、`start_step opt_place`。
-**必须两条一起跑**：
+仓库里 `hdmi_media_player_Runs/phy_1/settings.cfg` 已配好为"可复现 C77"：`parent = ../syn_1`、`start_step opt_place`。
+**必须两条一起跑**（`1` 与 `2` 为仓库内 `run.bat` 的序号，不是列表符号）：
 
 ```
 ① syn_1：start_step=read_design, end_step=opt_gate   （约 2 分钟）

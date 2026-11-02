@@ -187,6 +187,7 @@ fpga-audio-visual-player/
 ├── LICENSE
 ├── THIRD-PARTY-NOTICES.md          第三方与参考设计的逐模块边界
 ├── .gitignore / .gitattributes
+├── .github/workflows/lint.yml     CI：iverilog 差分仿真 + Python 语法检查
 │
 ├── hardware/                      ★ TD 工程（可直接用 TD 打开）
 │   └── hdmi_media_player/src/
@@ -231,7 +232,7 @@ fpga-audio-visual-player/
 ```
 
 > **为什么不把 RTL 拆成 `rtl/`、`sim/` 再重排？**
-> `.al` / `.prj` / `settings.cfg` 里全部是相对路径（`../user_source/...`、`al_ip/PLL.ipc`）。
+> `.prj` / `settings.cfg` 与 `.al` 的源文件列表里全部是相对路径（`../user_source/...`、`al_ip/PLL.ipc`）；`.al` 顶部另有一个 TD 写入的绝对 `Path` 提示属性，不参与文件定位。
 > 一旦移动源文件，TD 工程就得手工重建。因此本仓库**保持原工程树不动**，
 > 代价是 `hardware/` 层次略深，换来的是"克隆下来双击就能打开"。
 
@@ -454,7 +455,8 @@ flowchart LR
 物理层   spi_master.v         SPI 位收发与分频
 ```
 
-关键取舍：**BMP 与 WAV 各用一个 `fat32_file` 实例并行装载**（2,195 LUT / 711 REG）。
+关键取舍：**BMP 与 WAV 各用一个 `fat32_file` 实例并行装载**
+（两个实例合计 2,004 LUT / 796 REG，见 `reports/C77_04_area.rpt` 层次表的 `u_fat32_file` 两行：1001+1003 / 404+392）。
 合并成串行会把音频拖晚 3.2 秒、破坏音画同步，这是本项目最大的一处"用面积换体验"。
 
 ### 13.3 三级字库仲裁
@@ -532,7 +534,7 @@ dy[i]  = min(CAP, dly[i*2])                       // 不同抽头 = 行波
 | 字幕不律动 | 静音段正常；或按键误关（KEY_4 切换） |
 | md5 每次都不一样 | 正常，`.bit` 头部含时间戳；判同一配置要比 `Bitstream CRC` |
 
-完整排障（含数码管 state_code 判读）见 [`docs/faq.md`](docs/faq.md)。
+完整排障见 [`docs/faq.md`](docs/faq.md)，数码管 `state_code` 逐位判读见 [`docs/tf-card.md`](docs/tf-card.md) §状态码判读。
 
 ---
 
