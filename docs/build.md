@@ -38,8 +38,9 @@ cd fpga-audio-visual-player
 1. 启动 TD 6.2.1
 2. `File > Open Project`
 3. 选择 `hardware/hdmi_media_player/src/td_project/hdmi_media_player.al`
-4. `hdmi_media_player_Runs/{syn_1,phy_1}/` 只保留流程配置（`settings.cfg` / `.prj` / `.tcl` / `run.bat` / `*.area`）；
-   中间库（`*.db`）与输出报告（`*.timing` / `*.rpt` / `*.log`）不入库，两个 run 显示"未运行"是正常的
+4. `hdmi_media_player_Runs/{syn_1,phy_1}/` 只保留流程配置（`settings.cfg` / `.prj` / `.tcl` / `run.bat`）；
+   中间库（`*.db`）与全部输出报告（`*.timing` / `*.rpt` / `*.area` / `*.qor` / `*.log`）不入库，
+   两个 run 显示"未运行"是正常的
 5. 右键 `syn_1` → **Run**，约 2 分钟（`read_design → opt_gate`）
 6. 右键 `phy_1` → **Run**，约 4 分钟（`opt_place → bitgen`，复用 `syn_1/gate.db`）
 7. 产物：`hdmi_media_player_Runs/phy_1/hdmi_media_player.bit`
@@ -47,7 +48,9 @@ cd fpga-audio-visual-player
 ### 3.2 命令行
 
 ```bash
-TD=C:/Anlogic/TD_6.2.1_Engineer_6.2.168.116/bin/td_commands_prompt.exe
+# TD 安装目录；未设置时按默认安装位置取
+TD_HOME=${TD_HOME:-C:/Anlogic/TD_6.2.1_Engineer_6.2.168.116}
+TD="$TD_HOME/bin/td_commands_prompt.exe"
 cd hardware/hdmi_media_player/src/td_project/hdmi_media_player_Runs
 
 # ① 综合（约 2 分钟）→ syn_1/gate.db

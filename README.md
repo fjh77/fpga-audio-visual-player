@@ -303,7 +303,9 @@ grep -m1 -E "elaborate|import_db" syn_1/run.log
 ### 9.2 命令行
 
 ```bash
-TD=C:/Anlogic/TD_6.2.1_Engineer_6.2.168.116/bin/td_commands_prompt.exe
+# TD 安装目录；未设置时按默认安装位置取
+TD_HOME=${TD_HOME:-C:/Anlogic/TD_6.2.1_Engineer_6.2.168.116}
+TD="$TD_HOME/bin/td_commands_prompt.exe"
 cd hardware/hdmi_media_player/src/td_project/hdmi_media_player_Runs
 
 # ① 综合（约 2 分钟）→ syn_1/gate.db
