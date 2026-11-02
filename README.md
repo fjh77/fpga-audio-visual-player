@@ -185,6 +185,7 @@ ffmpeg -i input.jpg -vf scale=640:480 -pix_fmt bgr24 01.BMP
 fpga-audio-visual-player/
 ├── README.md                      ← 你在看的这份
 ├── LICENSE
+├── THIRD-PARTY-NOTICES.md          第三方与参考设计的逐模块边界
 ├── .gitignore / .gitattributes
 │
 ├── hardware/                      ★ TD 工程（可直接用 TD 打开）
@@ -192,12 +193,12 @@ fpga-audio-visual-player/
 │       ├── td_project/
 │       │   ├── hdmi_media_player.al         GUI 工程文件
 │       │   ├── flow_holdfix.tcl             构建流程脚本（修正 TD 默认流程的 fix_hold 门控）
-│       │   ├── al_ip/                       IP 配置文件（PLL / FIFO）
+│       │   ├── al_ip/                       IP 配置文件（PLL）
 │       │   └── hdmi_media_player_Runs/
 │       │       ├── syn_1/                   综合 run（settings.cfg / .prj）
 │       │       └── phy_1/                   实现 run（settings.cfg / .prj）
 │       └── user_source/
-│           ├── hdl_source/                  全部 RTL（50 个 .v，不含厂商 IP）
+│           ├── hdl_source/                  全部 RTL（46 个自写 .v + 厂商 IP 与加密核）
 │           │   ├── top.v                    顶层
 │           │   ├── SD/                      ★ TF 卡驱动 + FAT32 + 播放器（19 个文件）
 │           │   ├── ip/                      厂商 IP（PLL / 异步 FIFO）
@@ -221,8 +222,8 @@ fpga-audio-visual-player/
 │   ├── build.md                   环境依赖与构建
 │   ├── programming.md             烧录与固化
 │   ├── faq.md                     常见问题
-│   ├── 使用说明书.pdf              13 章操作手册
-│   ├── 复用与自研边界声明.docx      与参考实例的逐项边界
+│   ├── manual-zh.pdf             13 章操作手册
+│   ├── third-party-notice.docx    与参考实例的逐项边界（竞赛提交版）
 │   └── images/                    文档插图
 │
 └── tools/
@@ -393,7 +394,7 @@ python verification/tools/check_pixels.py --help
 |---|---|---|
 | **LUT（实现后）** | **15,670 / 19,600** | **79.95%** |
 | REG | 8,679 / 19,600 | 44.28% |
-| **slices** | **8,728 / 9,800** | **89.06%** |
+| **slices** | **8,728 / 9,800** | **89.06%**（出处 `reports/C77_03_route.qor`） |
 | BRAM（ERAM） | 31 / 64 | 48.44% |
 | DSP | 18 / 29 | 62.07% |
 | IO | 33 / 188 | 17.55% |
@@ -535,12 +536,18 @@ dy[i]  = min(CAP, dly[i*2])                       // 不同抽头 = 行波
 
 ## 16. 许可证与致谢
 
-- **原创代码**（`top.v`、`SD/` 下自研模块、`osd_*`、`banner_scroll`、`video_*`、`audio_*` 等）：
+- **原创代码**（`top.v` 的自主部分、`fat32_*`、`bmp_load_fat`、`wav_player`、`sd_arbiter3`、
+  `osd_*`、`banner_scroll`、`video_curl` / `video_transition` / `video_enhance`、`audio_*` 等）：
   **MIT License**，见 [LICENSE](LICENSE)。
-- **第三方 / 参考实例代码**（`SD/sd_card_cmd.v`、`SD/sd_card_sec_read_write.v`、
-  `lane_lvds_10_1.v`、`ip/` 下的 PLL 与异步 FIFO、`hdmi1.4b_transmitter_core/` 加密核）：
-  版权归原权利人，**不在 MIT 范围内**，遵循其原始授权。用于商业用途前请自行确认授权。
-- 逐项复用边界见 [`docs/third-party-notice.docx`](docs/third-party-notice.docx)。
+- **不在 MIT 范围内的内容**：
+  - 厂商 IP 与加密核：`ip/` 下的 PLL 与异步 FIFO、`hdmi1.4b_transmitter_core/`、
+    `include/sdr_*.enc.v`、`td_project/al_ip/`；
+  - 参考设计派生的模块：`SD/sd_card_cmd.v`、`SD/sd_card_sec_read_write.v`、`SD/sdram.v`、
+    `lane_lvds_10_1.v`，以及 `SD/frame_read_write.v`（98.8%）、`SD/frame_fifo_read.v`（96.1%）、
+    `SD/video_timing_data.v`（81.1%）、`SD/bmp_read.v`、`SD/sd_card_bmp.v` 中的参考部分。
+
+  版权归原权利人，遵循其原始授权。**商业用途前请自行确认授权。**
+- 逐文件边界、相似度数据与复核方法见 [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md)。
 
 ---
 

@@ -28,6 +28,6 @@ python reuse_audit.py --help
 ## 说明
 
 - 这些脚本是**开发期用来抓错**的工具，不是运行时依赖；删掉它们不影响工程的打开与重建。
-- 脚本里的路径多数按开发目录写成相对路径，换到别处运行时按需调整。
-- 工程侧的可独立运行验证环境另有 `03_verify/bmp_read/` 与 `03_verify/fat32_tbl/`，
+- 脚本内的路径全部按仓库布局解析（`../..` 推出仓库根），克隆到任意路径都能跑。
+- 工程侧的可独立运行验证环境另有 `verification/bmp_read/` 与 `verification/fat32_tbl/`，
   那两份自带 testbench，可直接用 iverilog 跑。

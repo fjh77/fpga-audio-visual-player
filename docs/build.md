@@ -27,7 +27,7 @@ git clone https://github.com/fjh77/fpga-audio-visual-player.git
 cd fpga-audio-visual-player
 ```
 
-工程可整包搬到任意路径——`.al` / `.prj` / `settings.cfg` 里全部是相对路径。
+工程可整包搬到任意路径——`settings.cfg` / `.prj` 里全部是相对路径；`.al` 顶部的 `Path` 属性只是 TD 写入的工程根提示，不影响打开。
 
 ---
 
@@ -38,7 +38,8 @@ cd fpga-audio-visual-player
 1. 启动 TD 6.2.1
 2. `File > Open Project`
 3. 选择 `hardware/hdmi_media_player/src/td_project/hdmi_media_player.al`
-4. 仓库**不含 run 数据库**，`syn_1` / `phy_1` 会显示"未运行"，这是正常的
+4. `hdmi_media_player_Runs/{syn_1,phy_1}/` 只保留流程配置（`settings.cfg` / `.prj` / `.tcl` / `run.bat` / `*.area`）；
+   中间库（`*.db`）与输出报告（`*.timing` / `*.rpt` / `*.log`）不入库，两个 run 显示"未运行"是正常的
 5. 右键 `syn_1` → **Run**，约 2 分钟（`read_design → opt_gate`）
 6. 右键 `phy_1` → **Run**，约 4 分钟（`opt_place → bitgen`，复用 `syn_1/gate.db`）
 7. 产物：`hdmi_media_player_Runs/phy_1/hdmi_media_player.bit`
@@ -118,7 +119,7 @@ grep -m1 -E "elaborate|import_db" syn_1/run.log
 | hold 修复被跳过 | `grep -c "hold fixing is skipped" run.log` | `0` |
 | 综合资源 | `grep "#luts" syn_1/gate.qor` | 9,400（基线值，改动后以新值为准） |
 | 签核时序 | `grep -E "Setup WNS\|Hold WNS" phy_1/route.qor` | `+160` / `+3` |
-| 面积 | 打开 `phy_1/*_phy.area` | LUT 15,670（79.95%） |
+| 面积 | 自行 flow 后看 `phy_1/*_phy.area`（本仓库只提交 `reports/C77_04_area.rpt` 作为证据） | LUT 15,670（79.95%） |
 
 ---
 

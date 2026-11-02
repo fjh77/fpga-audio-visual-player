@@ -30,7 +30,7 @@
 ## 怎么自己跑
 
 ```bash
-cd 03_verify/fat32_tbl
+cd verification/fat32_tbl
 
 # 按工程实际参数（10）验证
 iverilog -o t10.vvp -g2005 tb_fat32_dir_tbl.v fat32_dir_dut.v
