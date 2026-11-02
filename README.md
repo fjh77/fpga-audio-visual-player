@@ -8,8 +8,8 @@
 [![Device](https://img.shields.io/badge/Device-EG4S20BG256-informational)](https://www.anlogic.com/)
 [![Toolchain](https://img.shields.io/badge/Toolchain-TD%206.2.1-orange)](docs/build.md)
 [![Language](https://img.shields.io/badge/HDL-Verilog--2001-brightgreen)](#)
-[![Timing](https://img.shields.io/badge/Setup%20WNS-%2B160%20ps-success)](#资源与时序)
-[![Slices](https://img.shields.io/badge/Slices-89.06%25-yellow)](#资源与时序)
+[![Timing](https://img.shields.io/badge/Setup%20WNS-%2B160%20ps-success)](#12-资源与时序)
+[![Slices](https://img.shields.io/badge/Slices-89.06%25-yellow)](#12-资源与时序)
 
 一款在 **安路 EG4S20** FPGA 上实现的纯硬件音视频播放器：从 **TF 卡**读取 BMP 图片与 WAV 语音，
 经 **SDRAM 双缓冲**输出 **640×480 HDMI**，并叠加 OSD 菜单、滚动字幕与随音频律动的文字动画。
