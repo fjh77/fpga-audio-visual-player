@@ -1,0 +1,39 @@
+name: lint
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  rtl-verify:
+    name: RTL 差分仿真 + 脚本语法
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 iverilog
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq iverilog
+
+      - name: BMP 解析差分仿真（bmp_read 新旧实现逐拍等价）
+        working-directory: verification/bmp_read
+        run: |
+          iverilog -g2005 -o tb.vvp tb_bmp_equiv.v bmp_read_new.v bmp_read_ref.v
+          vvp tb.vvp | tee sim.log
+          grep -q "PASS" sim.log
+
+      - name: FAT32 目录表单元验证（容量 10 / 16 两组参数）
+        working-directory: verification/fat32_tbl
+        run: |
+          iverilog -g2005 -o t10.vvp tb_fat32_dir_tbl.v fat32_dir_dut.v
+          vvp t10.vvp | tee t10.log
+          grep -q "PASS" t10.log
+          iverilog -g2005 -Ptb_fat32_dir_tbl.MAX_FILES=16 -o t16.vvp tb_fat32_dir_tbl.v fat32_dir_dut.v
+          vvp t16.vvp | tee t16.log
+          grep -q "PASS" t16.log
+
+      - name: Python 脚本语法检查
+        run: |
+          python3 -m py_compile tools/make_media.py
+          python3 -m py_compile verification/tools/*.py
