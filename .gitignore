@@ -1,0 +1,25 @@
+# ---- TD 构建产物（可由源码重建，不入库） ----
+hardware/**/*.db
+hardware/**/*.log
+hardware/**/*.logw
+hardware/**/*.status
+hardware/**/*.timing
+hardware/**/*.bid
+hardware/**/.*.f
+hardware/**/best_result/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.venv/
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# ---- 本地临时素材（sdcard/ 为生成目录，不入库） ----
+sdcard/
+dist/

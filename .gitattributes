@@ -1,0 +1,24 @@
+* text=auto
+
+# 源码按文本处理（保证跨平台 diff 可读）
+*.v       text
+*.vh      text
+*.vhd     text
+*.tcl     text
+*.cfg     text
+*.prj     text
+*.al      text
+*.adc     text
+*.sdc     text
+*.md      text
+*.py      text
+
+# 二进制资产（禁止行尾转换与 diff）
+*.bit     binary
+*.BMP     binary
+*.WAV     binary
+*.png     binary
+*.jpg     binary
+*.pdf     binary
+*.docx    binary
+*.db      binary
