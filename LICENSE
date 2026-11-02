@@ -30,12 +30,22 @@ designs, or as encrypted IP cores. Their copyright belongs to their respective
 owners and they are NOT covered by the MIT license above. Confirm the original
 license terms with the vendor before any commercial use:
 
-  hardware/hdmi_media_player/src/user_source/hdl_source/SD/sd_card_cmd.v
-  hardware/hdmi_media_player/src/user_source/hdl_source/SD/sd_card_sec_read_write.v
-  hardware/hdmi_media_player/src/user_source/hdl_source/lane_lvds_10_1.v
   hardware/hdmi_media_player/src/user_source/hdl_source/ip/
   hardware/hdmi_media_player/src/user_source/hdl_source/hdmi1.4b_transmitter_core/
-  hardware/hdmi_media_player/src/td_project/al_ip/
+  hardware/hdmi_media_player/src/user_source/hdl_source/include/sdr_*.enc.v
+  hardware/hdmi_media_player/src/user_source/hdl_source/SD/sd_card_cmd.v
+  hardware/hdmi_media_player/src/user_source/hdl_source/SD/sd_card_sec_read_write.v
+  hardware/hdmi_media_player/src/user_source/hdl_source/SD/sdram.v
+  hardware/hdmi_media_player/src/user_source/hdl_source/lane_lvds_10_1.v
 
-See docs/third-party-notice.docx for a per-module boundary statement.
+The following modules are derived from the Anlogic APUG092 HDMI 1.4b Transmitter
+reference design / contest reference instances, and are NOT original work:
+
+  hardware/hdmi_media_player/src/user_source/hdl_source/SD/frame_read_write.v
+  hardware/hdmi_media_player/src/user_source/hdl_source/SD/frame_fifo_read.v
+  hardware/hdmi_media_player/src/user_source/hdl_source/SD/video_timing_data.v
+  hardware/hdmi_media_player/src/user_source/hdl_source/SD/bmp_read.v
+  hardware/hdmi_media_player/src/user_source/hdl_source/SD/sd_card_bmp.v
+
+See THIRD-PARTY-NOTICES.md for the full per-module boundary statement.
 ---------------------------------------------------------------------------
